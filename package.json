@@ -1,0 +1,10 @@
+{
+  "name": "proph-portal-inline-fix-r2",
+  "version": "3.0.1",
+  "private": true,
+  "dependencies": {
+    "google-trends-api": "^4.9.2",
+    "@netlify/blobs": "^6.5.0",
+    "node-fetch": "^3.3.2"
+  }
+}

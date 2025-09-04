@@ -1,0 +1,7 @@
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["google-trends-api", "@netlify/blobs", "node-fetch"]
+
+[[scheduled_functions]]
+  path = "/.netlify/functions/scheduled-trends"
+  schedule = "0 8 * * *"

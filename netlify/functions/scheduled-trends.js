@@ -1,0 +1,1 @@
+const { handler } = require('./trend-radar.js'); exports.handler = async (e,c)=>handler(e,c);
