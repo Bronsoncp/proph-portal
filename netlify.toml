@@ -1,3 +1,4 @@
+# netlify.toml
 [functions]
   node_bundler = "esbuild"
   external_node_modules = ["google-trends-api", "@netlify/blobs", "node-fetch"]
@@ -5,3 +6,9 @@
 [[scheduled_functions]]
   path = "/.netlify/functions/scheduled-trends"
   schedule = "0 8 * * *"
+
+# 🔐 CSP that allows inline JS/CSS + ffmpeg.wasm + WebAudio
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self' https: data: blob:; script-src 'self' https: 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https: 'unsafe-inline'; img-src 'self' https: data: blob:; media-src 'self' https: blob:; connect-src 'self' https: blob:; worker-src 'self' blob:"
