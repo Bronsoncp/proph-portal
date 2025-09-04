@@ -1,153 +1,408 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Proph Portal</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    body{margin:0;background:#0b0b0b;color:#fff;font-family:Inter,system-ui,sans-serif}
-    .tabs{display:flex;gap:10px;background:#111;padding:10px}
-    .tabs button{padding:8px 12px;background:#222;border:none;color:#fff;cursor:pointer;border-radius:6px}
-    .tabs button.active{background:#ffd54a;color:#000;font-weight:700}
-    .page{display:none;padding:20px}
-    .page.active{display:block}
-    .card{background:#1a1a1a;border-radius:10px;padding:16px;margin:10px 0}
-    input,textarea,select{width:100%;padding:8px;border-radius:6px;border:1px solid #333;background:#000;color:#fff;margin:6px 0}
-    .btn{padding:8px 12px;border-radius:6px;background:#ffd54a;color:#000;font-weight:600;border:none;cursor:pointer}
-    video{width:100%;margin-top:10px;border-radius:8px}
-    pre{background:#000;padding:10px;border-radius:6px;white-space:pre-wrap}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Proph Portal — Full</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0b0b;--ink:#fff;--muted:#a9a9a9;--card:#121212;--border:#1f1f1f;--accent:#ffd54a}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+.layout{display:grid;grid-template-columns:260px 1fr;min-height:100vh}
+.sidebar{border-right:1px solid var(--border);padding:16px;position:sticky;top:0;height:100vh}
+.brand{display:grid;grid-template-columns:48px 1fr;grid-template-rows:auto auto;column-gap:10px;align-items:center;margin-bottom:12px}
+.logo{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#222,#000);display:flex;align-items:center;justify-content:center;font-weight:700;border:1px solid var(--border)}
+.brand-text{font-weight:700}.sub{grid-column:2;color:var(--muted);font-size:12px;margin-top:2px}
+.tabs{display:flex;flex-direction:column;gap:8px}
+.tabs button,.tabs a.ext{background:#0f0f0f;border:1px solid var(--border);color:#eaeaea;padding:10px 12px;border-radius:10px;text-align:left;cursor:pointer;text-decoration:none}
+.tabs button.active{border-color:#2a2a2a;background:#141414}
+main{padding:20px}
+.page{display:none} .page.active{display:block}
+.grid{display:grid;gap:14px}.grid.three{grid-template-columns:repeat(3,1fr)}.grid.two{grid-template-columns:1fr 1fr}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px}
+h1{margin:0 0 8px}h3{margin:0 0 8px}.muted{color:var(--muted)}
+.btn{background:var(--ink);color:#000;border:none;border-radius:10px;padding:10px 12px;font-weight:700;cursor:pointer}
+.btn.sm{font-weight:600;padding:8px 10px}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:6px}
+input,textarea,select{width:100%;background:#0f0f0f;border:1px solid var(--border);color:#fff;border-radius:10px;padding:10px 12px}
+.code{white-space:pre-wrap;background:#0d0d0d;border:1px solid var(--border);border-radius:10px;padding:10px;min-height:80px}
+.table{width:100%;border-collapse:collapse;font-size:13px}
+.table th,.table td{border-bottom:1px solid #1a1a1a;padding:8px;text-align:left}
+.progress{height:10px;background:#0f0f0f;border:1px solid var(--border);border-radius:20px;margin:8px 0}
+.progress>div{height:100%;background:var(--accent);border-radius:20px}
+.timeline{list-style:none;padding-left:0}.timeline li{padding:6px 0;border-left:2px solid #2a2a2a;margin-left:10px;padding-left:10px}
+video{width:100%;border-radius:12px;margin-top:8px}
+@media(max-width:1000px){.layout{grid-template-columns:1fr}.grid.three{grid-template-columns:1fr}.grid.two{grid-template-columns:1fr}.sidebar{position:static;height:auto}}
+</style>
 </head>
 <body>
-  <nav class="tabs">
-    <button data-tab="home" class="active">Home</button>
-    <button data-tab="create">Create</button>
-  </nav>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand"><span class="logo">Ｐ</span><div class="brand-text">Proph Portal</div><div class="sub">full build</div></div>
+    <nav class="tabs">
+      <button data-tab="home" class="active">🏠 Home</button>
+      <button data-tab="create">🎬 Create</button>
+      <button data-tab="plan">🗺️ Plan</button>
+      <button data-tab="grow">🚀 Grow</button>
+      <button data-tab="track">📊 Track</button>
+      <a class="ext" href="#smartlink" id="openSmartlink">🔗 Smartlink</a>
+    </nav>
+  </aside>
 
-  <section class="page active" data-page="home">
-    <h1>Welcome to Proph Portal</h1>
-    <p>Use the tabs above to navigate. Test Create features below.</p>
-  </section>
+  <main>
+    <!-- HOME -->
+    <section class="page active" data-page="home">
+      <h1>Mission Control</h1>
+      <div class="grid three">
+        <div class="card"><h3>🎧 Streams this week</h3><canvas id="streamsChart" height="120"></canvas></div>
+        <div class="card"><h3>💰 Ad Spend (last 7 days)</h3><canvas id="spendChart" height="120"></canvas></div>
+        <div class="card">
+          <h3>🔥 Trend Radar (today)</h3>
+          <ul id="trendList" class="list"></ul>
+          <button class="btn sm" id="trendRefresh">Refresh</button>
+          <div id="trendStatus" class="muted"></div>
+        </div>
+      </div>
+      <div class="grid two">
+        <div class="card"><h3>🏆 Next Milestone</h3><p>Hit <b>250k streams</b> for <b>Hurts The New Sexy</b>.</p><div class="progress"><div style="width:42%"></div></div><p class="muted">42% towards goal • Projected in ~2 weeks</p></div>
+        <div class="card"><h3>⚡ Quick Actions</h3><div class="quick">
+          <button class="btn" data-nav="create#hook">Find today’s hook</button>
+          <button class="btn" data-nav="grow#trend">See trend match-ups</button>
+          <button class="btn" data-nav="plan#blueprint">Generate paid blueprint</button>
+          <button class="btn" data-nav="track#spend">Log spend</button>
+        </div></div>
+      </div>
+    </section>
 
-  <section class="page" data-page="create">
-    <h1>Create Tools</h1>
+    <!-- CREATE -->
+    <section class="page" data-page="create">
+      <h1>Create</h1>
+      <div class="grid three">
+        <div class="card">
+          <h3>🎬 Clip Wizard</h3>
+          <div class="row">
+            <input type="file" id="cwFile" accept="audio/*,video/*">
+            <input id="cwStart" placeholder="Start mm:ss" value="0:00">
+            <input id="cwDur" placeholder="Duration (s)" value="12">
+          </div>
+          <div class="row">
+            <select id="cwRes"><option>1080x1920</option><option>720x1280</option></select>
+            <select id="cwCrop"><option value="center">Center</option><option value="top">Top</option><option value="bottom">Bottom</option></select>
+            <button class="btn sm" id="cwMake">Generate</button>
+          </div>
+          <div class="muted" id="cwStatus"></div>
+          <video id="cwPreview" controls playsinline></video>
+          <a id="cwDownload" class="btn sm" style="display:none" download="proph_clip.mp4">Download MP4</a>
+        </div>
 
-    <div class="card">
-      <h3>🎬 Clip Wizard</h3>
-      <input type="file" id="cwFile" accept="audio/*,video/*">
-      <input id="cwStart" placeholder="Start mm:ss" value="0:00">
-      <input id="cwDur" placeholder="Duration (s)" value="12">
-      <select id="cwRes"><option>1080x1920</option><option>720x1280</option></select>
-      <select id="cwCrop"><option value="center">Center</option><option value="top">Top</option><option value="bottom">Bottom</option></select>
-      <button class="btn" id="cwMake">Generate</button>
-      <div id="cwStatus"></div>
-      <video id="cwPreview" controls></video>
-      <a id="cwDownload" class="btn" style="display:none" download="proph_clip.mp4">Download MP4</a>
-    </div>
+        <div class="card" id="hook">
+          <h3>🎯 Hook Finder</h3>
+          <input type="file" id="hookFile" accept="audio/*" />
+          <button class="btn sm" id="hookAnalyze">Analyze</button>
+          <ol id="hookOut" class="list"></ol>
+        </div>
 
-    <div class="card">
-      <h3>🎯 Hook Finder</h3>
-      <input type="file" id="hookFile" accept="audio/*">
-      <button class="btn" id="hookAnalyze">Analyze</button>
-      <ol id="hookOut"></ol>
-    </div>
+        <div class="card">
+          <h3>✍️ Fan Story Generator</h3>
+          <textarea id="storyInput" rows="4" placeholder="Describe the track vibe + key lyric..."></textarea>
+          <button class="btn sm" id="storyGen">Generate copy</button>
+          <pre id="storyOut" class="code"></pre>
+        </div>
+      </div>
+    </section>
 
-    <div class="card">
-      <h3>✍️ Fan Story Generator</h3>
-      <textarea id="storyInput" rows="3" placeholder="Describe vibe/lyric"></textarea>
-      <button class="btn" id="storyGen">Generate copy</button>
-      <pre id="storyOut"></pre>
-    </div>
-  </section>
+    <!-- PLAN -->
+    <section class="page" data-page="plan">
+      <h1>Plan</h1>
+      <div class="grid three">
+        <div class="card" id="blueprint"><h3>🧠 Paid Blueprint</h3><button class="btn sm" id="bpGen">Generate blueprint</button><pre id="bpOut" class="code"></pre></div>
+        <div class="card">
+          <h3>🏗️ Label Simulator</h3>
+          <div class="row">
+            <div><label>Budget (£) <b id="sb"></b></label><input type="range" id="simBudget" min="0" max="2000" value="200"></div>
+            <div><label>Days <b id="sd"></b></label><input type="range" id="simDays" min="1" max="30" value="7"></div>
+            <div><label>Creative Quality <b id="sq"></b></label><input type="range" id="simCreative" min="1" max="10" value="7"></div>
+          </div>
+          <div class="simRow" style="margin-top:8px">
+            <div>Projected Reach: <b id="simReach">—</b></div>
+            <div>Projected Streams: <b id="simStreams">—</b></div>
+            <div>ROI Score: <b id="simROI">—</b></div>
+          </div>
+          <button class="btn sm" id="simRun">Run Simulation</button>
+        </div>
+        <div class="card">
+          <h3>📋 Release Playbooks</h3>
+          <select id="pbType">
+            <option value="single">Single Drop (2-week)</option>
+            <option value="openverse">Open Verse Challenge (10-day)</option>
+            <option value="deluxe">Deluxe Release (30-day)</option>
+          </select>
+          <button class="btn sm" id="pbLoad">Load Template</button>
+          <pre id="pbOut" class="code"></pre>
+          <button class="btn sm" id="pbExport" style="display:none;">Export JSON</button>
+        </div>
+      </div>
+    </section>
 
-  <!-- ffmpeg libraries BEFORE our script -->
-  <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/ffmpeg.min.js"></script>
-  <script src="https://unpkg.com/@ffmpeg/util@0.12.6/dist/index.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.6/dist/ffmpeg.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.6/dist/index.min.js"></script>
+    <!-- GROW -->
+    <section class="page" data-page="grow">
+      <h1>Grow</h1>
+      <div class="grid three">
+        <div class="card" id="trend">
+          <h3>🔥 Trend Radar</h3>
+          <ul id="trendList2" class="list"></ul>
+          <button class="btn sm" id="trendRefresh2">Refresh</button>
+          <div id="trendStatus2" class="muted"></div>
+        </div>
+        <div class="card">
+          <h3>🤝 Collab Matcher</h3>
+          <label>Vibe</label><input id="cmVibe" placeholder="gym, london, streetwear">
+          <button class="btn sm" id="cmFind">Find Collabs</button>
+          <ul id="cmOut" class="list"></ul>
+        </div>
+        <div class="card">
+          <h3>🔗 Smartlink Builder</h3>
+          <div class="row">
+            <input id="slArtist" placeholder="Artist" value="Proph">
+            <input id="slTitle" placeholder="Release Title" value="Hurts The New Sexy">
+            <input id="slSource" placeholder="utm_source" value="instagram">
+          </div>
+          <div class="row">
+            <input id="slSpotify" placeholder="Spotify URL">
+            <input id="slApple" placeholder="Apple URL">
+            <input id="slYouTube" placeholder="YouTube URL">
+          </div>
+          <button class="btn sm" id="slSave">Save</button>
+          <a class="btn sm" href="#smartlink" id="smartlinkView">Open Smartlink</a>
+        </div>
+      </div>
+    </section>
 
-  <script>
-    // Tab navigation
-    document.querySelectorAll('.tabs button').forEach(btn=>{
-      btn.onclick=()=>{
-        document.querySelector('.tabs button.active')?.classList.remove('active');
-        btn.classList.add('active');
-        const tab=btn.getAttribute('data-tab');
-        document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.dataset.page===tab));
-      };
-    });
+    <!-- TRACK -->
+    <section class="page" data-page="track">
+      <h1>Track</h1>
+      <div class="grid three">
+        <div class="card" id="spend">
+          <h3>💰 Spend Tracker</h3>
+          <div class="row">
+            <input id="spDate" type="date">
+            <select id="spPlat"><option>TikTok</option><option>Instagram</option><option>Spotify</option></select>
+            <input id="spCamp" placeholder="Campaign name">
+          </div>
+          <div class="row">
+            <input id="spSpend" type="number" placeholder="£ spend">
+            <input id="spViews" type="number" placeholder="views">
+            <input id="spClicks" type="number" placeholder="clicks">
+          </div>
+          <div class="row">
+            <input id="spSaves" type="number" placeholder="saves">
+            <input id="spStreams" type="number" placeholder="streams">
+            <button class="btn sm" id="spAdd">Add</button>
+          </div>
+          <table class="table" id="spTable"><thead><tr><th>Date</th><th>Plat</th><th>Camp</th><th>£</th><th>Views</th><th>Clicks</th><th>Saves</th><th>Streams</th></tr></thead><tbody></tbody></table>
+        </div>
+        <div class="card">
+          <h3>📈 Predictive Scoring</h3>
+          <div class="row">
+            <input id="psSaves" type="number" placeholder="Saves (24h)">
+            <input id="psStreams" type="number" placeholder="Streams (24h)">
+            <input id="psCtr" type="number" placeholder="CTR %">
+          </div>
+          <button class="btn sm" id="psRun">Score</button>
+          <div class="scoreBox" id="psOut">—</div>
+        </div>
+        <div class="card">
+          <h3>📜 Proph Story Mode</h3>
+          <ul id="storyTimeline" class="timeline"></ul>
+          <div class="row">
+            <input id="tlWhen" placeholder="2025-09-04">
+            <input id="tlWhat" placeholder="Hit 200k streams on HTNS">
+            <button class="btn sm" id="tlAdd">Add Milestone</button>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    // Wait for FFmpeg
-    function whenFFmpegReady(fn){
-      if(window.FFmpeg&&FFmpeg.createFFmpeg) return fn();
-      const t=setInterval(()=>{if(window.FFmpeg&&FFmpeg.createFFmpeg){clearInterval(t);fn();}},300);
+    <!-- Simple Smartlink overlay target (single-file approach) -->
+    <section id="smartlink" class="page" style="display:none"></section>
+  </main>
+</div>
+
+<!-- Libraries BEFORE our main script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- ffmpeg primary + fallback -->
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/ffmpeg.min.js"></script>
+<script src="https://unpkg.com/@ffmpeg/util@0.12.6/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.6/dist/ffmpeg.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.6/dist/index.min.js"></script>
+
+<script>
+// ---------- SPA NAV ----------
+const pages=document.querySelectorAll('.page');
+document.querySelectorAll('.tabs button').forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelector('.tabs button.active')?.classList.remove('active');
+    btn.classList.add('active');
+    const tab=btn.getAttribute('data-tab');
+    pages.forEach(p=>p.classList.toggle('active',p.getAttribute('data-page')===tab));
+    if(tab==='home') drawHome();
+  };
+});
+document.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>{
+  const [tab,anchor]=b.getAttribute('data-nav').split('#');
+  document.querySelector(`.tabs button[data-tab="${tab}"]`).click();
+  if(anchor){location.hash=anchor}
+});
+
+// ---------- HOME CHARTS + TRENDS ----------
+function drawHome(){
+  const s=document.getElementById('streamsChart')?.getContext('2d');
+  const p=document.getElementById('spendChart')?.getContext('2d');
+  if(s){window._sc&&_sc.destroy();window._sc=new Chart(s,{type:'line',data:{labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],datasets:[{label:'Streams',data:[12,18,25,22,31,45,52]}]},options:{plugins:{legend:{display:false}}}})}
+  if(p){window._pc&&_pc.destroy();window._pc=new Chart(p,{type:'bar',data:{labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],datasets:[{label:'Spend',data:[0,0,0,5,5,10,5]}]},options:{plugins:{legend:{display:false}}}})}
+  loadTrends('trendList','trendStatus');
+}
+drawHome();
+document.getElementById('trendRefresh').onclick=()=>loadTrends('trendList','trendStatus');
+document.getElementById('trendRefresh2').onclick=()=>loadTrends('trendList2','trendStatus2');
+loadTrends('trendList2','trendStatus2');
+
+async function loadTrends(listId,statusId){
+  const ul=document.getElementById(listId); if(!ul) return;
+  const status=document.getElementById(statusId);
+  ul.innerHTML='<li class="muted">Loading…</li>'; if(status) status.textContent='';
+  try{
+    const res=await fetch('/.netlify/functions/trend-radar');
+    if(!res.ok) throw 0;
+    const d=await res.json(); ul.innerHTML='';
+    (d.items||[]).slice(0,8).forEach(t=>{const li=document.createElement('li'); li.textContent=`${t.platform} — ${t.title}`+(t.hint?` (${t.hint})`:``); ul.appendChild(li);});
+    if(!ul.children.length) ul.innerHTML='<li class="muted">No live trends yet.</li>';
+  }catch(e){
+    ul.innerHTML='';
+    ['#gymtok 12–15s edit w/ hook','POV dating skit → chorus','Open-verse duet prompt (8 bars)','Streetwear fit check + lyric overlay'].forEach(s=>{const li=document.createElement('li'); li.textContent=s; ul.appendChild(li);});
+    if(status) status.textContent='Showing fallback trends.';
+  }
+}
+
+// ---------- FFmpeg guard ----------
+function whenFFmpegReady(fn){
+  if(window.FFmpeg && FFmpeg.createFFmpeg) return fn();
+  const t=setInterval(()=>{ if(window.FFmpeg && FFmpeg.createFFmpeg){ clearInterval(t); fn(); }},300);
+}
+
+// ---------- CLIP WIZARD ----------
+whenFFmpegReady(()=>{
+  const { createFFmpeg, fetchFile } = FFmpeg;
+  const ff = createFFmpeg({ log:false });
+  async function ensureFF(){ if(!ff.isLoaded()){ document.getElementById('cwStatus').textContent='Loading ffmpeg…'; await ff.load(); document.getElementById('cwStatus').textContent='ffmpeg ready.'; } }
+  function parseTime(t){const p=(t||'0:00').split(':'),m=+p[0]||0,s=+p[1]||0;return m*60+s;}
+  document.getElementById('cwMake').onclick=async()=>{
+    const f=document.getElementById('cwFile').files[0];
+    if(!f){alert('Pick a file first');return;}
+    await ensureFF();
+    const start=parseTime(document.getElementById('cwStart').value);
+    const dur=parseFloat(document.getElementById('cwDur').value||'12');
+    const [W,H]=document.getElementById('cwRes').value.split('x').map(Number);
+    const crop=document.getElementById('cwCrop').value;
+    const isAudio=/\.(mp3|wav|m4a|aac|flac)$/i.test(f.name);
+    const inN='in', outN='out.mp4';
+    ff.FS('writeFile', inN, await fetchFile(f));
+    let args=[];
+    if(isAudio){
+      args=['-f','lavfi','-i',`color=size=${W}x${H}:rate=30:color=black`,'-i',inN,'-ss',String(start),'-t',String(dur),'-shortest','-c:v','libx264','-pix_fmt','yuv420p','-c:a','aac','-b:a','192k',outN];
+    }else{
+      const pos=crop==='top'?0:(crop==='bottom'?'(in_h-out_h)':'(in_h-out_h)/2');
+      const filter=`scale=-2:${H},crop=${W}:${H}:(in_w-${W})/2:${pos}`;
+      args=['-ss',String(start),'-t',String(dur),'-i',inN,'-vf',filter,'-r','30','-c:v','libx264','-pix_fmt','yuv420p','-c:a','aac','-b:a','192k',outN];
     }
+    try{
+      document.getElementById('cwStatus').textContent='Processing…';
+      await ff.run(...args);
+      const data=ff.FS('readFile', outN);
+      const url=URL.createObjectURL(new Blob([data.buffer],{type:'video/mp4'}));
+      document.getElementById('cwPreview').src=url;
+      const a=document.getElementById('cwDownload'); a.href=url; a.style.display='inline-block';
+      document.getElementById('cwStatus').textContent='Done.';
+    }catch(err){
+      console.error(err);
+      document.getElementById('cwStatus').textContent='Error (open Console)';
+    }finally{ try{ff.FS('unlink',outN)}catch{} try{ff.FS('unlink',inN)}catch{} }
+  };
+});
 
-    // Clip Wizard
-    whenFFmpegReady(()=>{
-      const { createFFmpeg, fetchFile } = FFmpeg;
-      const ff = createFFmpeg({ log:false });
-      async function ensureFF(){ if(!ff.isLoaded()){ document.getElementById('cwStatus').textContent='Loading ffmpeg…'; await ff.load(); document.getElementById('cwStatus').textContent='ffmpeg ready.'; } }
-      function parseTime(t){const p=(t||'0:00').split(':'),m=+p[0]||0,s=+p[1]||0;return m*60+s;}
-      document.getElementById('cwMake').onclick=async()=>{
-        const f=document.getElementById('cwFile').files[0];
-        if(!f){alert('Pick a file first');return;}
-        await ensureFF();
-        const start=parseTime(document.getElementById('cwStart').value);
-        const dur=parseFloat(document.getElementById('cwDur').value||'12');
-        const [W,H]=document.getElementById('cwRes').value.split('x').map(Number);
-        const crop=document.getElementById('cwCrop').value;
-        const isAudio=/\.(mp3|wav|m4a|aac|flac)$/i.test(f.name);
-        const inN='in', outN='out.mp4';
-        ff.FS('writeFile', inN, await fetchFile(f));
-        let args=[];
-        if(isAudio){
-          args=['-f','lavfi','-i',`color=size=${W}x${H}:rate=30:color=black`,'-i',inN,'-ss',String(start),'-t',String(dur),'-shortest','-c:v','libx264','-pix_fmt','yuv420p','-c:a','aac','-b:a','192k',outN];
-        }else{
-          const pos = crop==='top'?0:(crop==='bottom'?'(in_h-out_h)':'(in_h-out_h)/2');
-          const filter = `scale=-2:${H},crop=${W}:${H}:(in_w-${W})/2:${pos}`;
-          args=['-ss',String(start),'-t',String(dur),'-i',inN,'-vf',filter,'-r','30','-c:v','libx264','-pix_fmt','yuv420p','-c:a','aac','-b:a','192k',outN];
-        }
-        try{
-          document.getElementById('cwStatus').textContent='Processing…';
-          await ff.run(...args);
-          const data=ff.FS('readFile', outN);
-          const url=URL.createObjectURL(new Blob([data.buffer],{type:'video/mp4'}));
-          document.getElementById('cwPreview').src=url;
-          const a=document.getElementById('cwDownload'); a.href=url; a.style.display='inline-block';
-          document.getElementById('cwStatus').textContent='Done.';
-        }catch(err){
-          console.error(err);
-          document.getElementById('cwStatus').textContent='Error (open Console)';
-        }finally{try{ff.FS('unlink',outN)}catch{} try{ff.FS('unlink',inN)}catch{}}
-      };
-    });
+// ---------- HOOK FINDER ----------
+document.getElementById('hookAnalyze').onclick=async()=>{
+  const f=document.getElementById('hookFile').files[0];
+  const out=document.getElementById('hookOut'); out.innerHTML='';
+  if(!f){ out.innerHTML='<li class="muted">Upload an audio file first.</li>'; return; }
+  const ctx=new (window.AudioContext||window.webkitAudioContext)();
+  const a=await ctx.decodeAudioData(await f.arrayBuffer());
+  const step=Math.floor(a.sampleRate*0.25); const ch=a.getChannelData(0); const energies=[];
+  for(let i=0;i<ch.length;i+=step){let s=0; for(let j=0;j<step&&i+j<ch.length;j++){s+=ch[i+j]*ch[i+j]} energies.push({i,e:s/step});}
+  energies.sort((x,y)=>y.e-x.e);
+  const picks=energies.slice(0,3).map(x=>x.i/a.sampleRate).sort((x,y)=>x-y);
+  const fmt=t=>{const m=Math.floor(t/60),s=Math.floor(t%60);return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`};
+  picks.forEach(t=>{const li=document.createElement('li'); li.textContent=`${fmt(t)}–${fmt(t+12)} (high energy window)`; out.appendChild(li);});
+};
 
-    // Hook Finder
-    document.getElementById('hookAnalyze').onclick=async()=>{
-      const f=document.getElementById('hookFile').files[0];
-      const out=document.getElementById('hookOut'); out.innerHTML='';
-      if(!f){out.innerHTML='<li>Upload an audio file first.</li>';return;}
-      const ctx=new (window.AudioContext||window.webkitAudioContext)();
-      const audio=await ctx.decodeAudioData(await f.arrayBuffer());
-      const step=Math.floor(audio.sampleRate*0.25); const ch=audio.getChannelData(0); const energies=[];
-      for(let i=0;i<ch.length;i+=step){let s=0; for(let j=0;j<step&&i+j<ch.length;j++){s+=ch[i+j]*ch[i+j]} energies.push({i,e:s/step});}
-      energies.sort((a,b)=>b.e-a.e);
-      const picks=energies.slice(0,3).map(x=>x.i/audio.sampleRate).sort((a,b)=>a-b);
-      const fmt=t=>`${String(Math.floor(t/60)).padStart(2,'0')}:${String(Math.floor(t%60)).padStart(2,'0')}`;
-      picks.forEach(t=>{const li=document.createElement('li'); li.textContent=`${fmt(t)}–${fmt(t+12)} (hook)`;
-        out.appendChild(li);});
-    };
+// ---------- STORY GENERATOR ----------
+document.getElementById('storyGen').onclick=()=>{
+  const vibe=(document.getElementById('storyInput').value||'London grind, late-night trains').trim();
+  const copy=`POV: you stopped waiting for permission.
+“Hurts The New Sexy” is for the ones who turn pressure into diamonds.
+${vibe?`Vibe: ${vibe}.`:''}
+If you feel this, save it & tag someone who needs the reminder.`;
+  document.getElementById('storyOut').textContent=copy;
+};
 
-    // Fan Story
-    document.getElementById('storyGen').onclick=()=>{
-      const vibe=(document.getElementById('storyInput').value||'London grind').trim();
-      document.getElementById('storyOut').textContent=
-        `POV: you stopped waiting for permission.\n“Hurts The New Sexy” is for the ones who turn pressure into diamonds.\nVibe: ${vibe}\nIf you feel this, save & tag someone who needs the reminder.`;
-    };
-  </script>
+// ---------- BLUEPRINT ----------
+document.getElementById('bpGen').onclick=()=>{
+  document.getElementById('bpOut').textContent=`CAMPAIGN BLUEPRINT
+• 3 creatives (10–13s) • Markets: UK/IE • £5/day × 3 (3 days) → Pick winner
+• Optimise: Video Views → switch to Traffic if CTR ≥ 0.7%
+• CTA: Save for later • Open-verse prompt on Day 2 & 5`;
+};
+
+// ---------- LABEL SIM ----------
+function simCalc(){
+  const b=+document.getElementById('simBudget').value;
+  const d=+document.getElementById('simDays').value;
+  const q=+document.getElementById('simCreative').value;
+  document.getElementById('sb').textContent=b; document.getElementById('sd').textContent=d; document.getElementById('sq').textContent=q;
+  const reach=Math.round(b*(80+q*15));
+  const streams=Math.round(reach*(0.04+q*0.002));
+  const roi=(streams/(b||1)).toFixed(2);
+  document.getElementById('simReach').textContent=reach.toLocaleString();
+  document.getElementById('simStreams').textContent=streams.toLocaleString();
+  document.getElementById('simROI').textContent=roi;
+}
+['simBudget','simDays','simCreative'].forEach(id=>document.getElementById(id)?.addEventListener('input',simCalc));
+document.getElementById('simRun').onclick=simCalc; setTimeout(simCalc,0);
+
+// ---------- PLAYBOOKS ----------
+const PLAYBOOKS={single:["D-7: Tease 8s hook clip","D-5: Smartlink live + presave push","D-3: Open-verse prompt","D-1: BTS + caption about story","D0: Release day — 3 clips","D+2: Duet best UGC","D+5: Remix/post-chorus clip"],openverse:["D-10: Announce challenge + prize","D-8: Post instrumental/open bars","D-6: Creator seeding (DM 20)","D-4: Repost best entries","D0: Pick finalists + montage","D+3: Winner duet + shoutouts"],deluxe:["D-30: Cover reveal","D-21: Single #1 push","D-14: Behind the lyrics series","D-7: Pre-add + teaser","D0: Drop + live Q&A","D+7: Remix pack","D+14: Fan meet pop-up"]};
+document.getElementById('pbLoad').onclick=()=>{const t=document.getElementById('pbType').value;const lines=(PLAYBOOKS[t]||[]);const out=document.getElementById('pbOut');out.textContent=lines.map(x=>'• '+x).join('\n');document.getElementById('pbExport').style.display=lines.length?'inline-block':'none'};
+document.getElementById('pbExport').onclick=()=>{const t=document.getElementById('pbType').value;const lines=(PLAYBOOKS[t]||[]);const blob=new Blob([JSON.stringify({type:t,checklist:lines},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`proph_playbook_${t}.json`;a.click()};
+
+// ---------- COLLAB MATCHER ----------
+const MOCK_CREATORS=[{handle:'@londonlifts',vibe:['gym','london'],plat:'TikTok',est:'50k–150k views'},{handle:'@fitcheckldn',vibe:['streetwear','london'],plat:'IG Reels',est:'20k–60k views'},{handle:'@povdatinguk',vibe:['dating','relatable'],plat:'TikTok',est:'30k–80k views'},{handle:'@ukhiphopheads',vibe:['uk rap','lyric'],plat:'IG Reels',est:'10k–30k views'}];
+document.getElementById('cmFind').onclick=()=>{const q=(document.getElementById('cmVibe').value||'').toLowerCase();const out=document.getElementById('cmOut');out.innerHTML='';const res=MOCK_CREATORS.filter(x=>x.vibe.join(' ').includes(q));(res.length?res:MOCK_CREATORS).forEach(c=>{const li=document.createElement('li');li.textContent=`${c.handle} • ${c.plat} • ${c.est}`;out.appendChild(li)})};
+
+// ---------- SMARTLINK ----------
+function utm(url,src){try{const u=new URL(url);u.searchParams.set('utm_source',src||'social');u.searchParams.set('utm_medium','social');u.searchParams.set('utm_campaign','proph_launch');return u.toString()}catch(e){return''}}
+document.getElementById('slSave').onclick=()=>{const cfg={artist:document.getElementById('slArtist').value||'Proph',title:document.getElementById('slTitle').value||'Release',spotify:utm(document.getElementById('slSpotify').value,document.getElementById('slSource').value),apple:utm(document.getElementById('slApple').value,document.getElementById('slSource').value),youtube:utm(document.getElementById('slYouTube').value,document.getElementById('slSource').value)};localStorage.setItem('proph_smartlink',JSON.stringify(cfg));alert('Smartlink saved — open Smartlink to preview.')};
+function openSmart(){const host=document.querySelector('#smartlink');host.style.display='block';pages.forEach(p=>p.classList.remove('active'));host.classList.add('active');host.innerHTML=`<div style="max-width:520px;margin:0 auto;padding:40px 20px;text-align:center"><div style="width:200px;height:200px;border-radius:12px;background:#111;margin:0 auto 16px"></div><h1 id="stt" style="font-size:28px;margin:8px 0 4px"></h1><h2 id="sar" style="font-size:16px;margin:0;color:#aaa;font-weight:500"></h2><div id="slinks"></div><div style="color:#8a8a8a;font-size:12px;margin-top:16px">© Proph</div></div>`;const cfg=JSON.parse(localStorage.getItem('proph_smartlink')||'{"title":"Hurts The New Sexy","artist":"Proph"}');document.getElementById('stt').textContent=cfg.title||'Song';document.getElementById('sar').textContent=cfg.artist||'Artist';[['Listen on Spotify',cfg.spotify],['Listen on Apple Music',cfg.apple],['Watch on YouTube',cfg.youtube]].filter(([,u])=>!!u).forEach(([t,u])=>{const a=document.createElement('a');a.style.cssText='display:block;width:100%;padding:14px 16px;border:1px solid #2a2a2a;background:#141414;color:#fff;margin:10px 0;border-radius:10px;text-decoration:none';a.textContent=t;a.href=u;a.target='_blank';document.getElementById('slinks').appendChild(a)})}
+document.getElementById('smartlinkView').onclick=openSmart; document.getElementById('openSmartlink').onclick=openSmart;
+
+// ---------- SPEND / PREDICT / STORY ----------
+function loadSpend(){try{return JSON.parse(localStorage.getItem('proph_spend_v3')||'[]')}catch(e){return[]}}function saveSpend(x){localStorage.setItem('proph_spend_v3',JSON.stringify(x))}
+function renderSpend(){const tb=document.querySelector('#spTable tbody');if(!tb)return;tb.innerHTML='';loadSpend().forEach(r=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${r.date}</td><td>${r.plat}</td><td>${r.camp}</td><td>${r.spend}</td><td>${r.views}</td><td>${r.clicks}</td><td>${r.saves}</td><td>${r.streams}</td>`;tb.appendChild(tr)})}
+document.getElementById('spAdd').onclick=()=>{const row={date:document.getElementById('spDate').value||new Date().toISOString().slice(0,10),plat:document.getElementById('spPlat').value,camp:document.getElementById('spCamp').value||'—',spend:+document.getElementById('spSpend').value||0,views:+document.getElementById('spViews').value||0,clicks:+document.getElementById('spClicks').value||0,saves:+document.getElementById('spSaves').value||0,streams:+document.getElementById('spStreams').value||0};const rows=loadSpend();rows.push(row);saveSpend(rows);renderSpend()};renderSpend();
+document.getElementById('psRun').onclick=()=>{const s=+document.getElementById('psSaves').value||0,st=+document.getElementById('psStreams').value||0,ctr=+document.getElementById('psCtr').value||0;const score=Math.min(100,Math.round((s*0.4)+(st*0.1)+(ctr*2)));const tier=score>75?'🔥 Hot trajectory':score>50?'✅ Promising':'🧪 Needs testing';document.getElementById('psOut').textContent=`${tier} — Score ${score}/100`};
+function loadTL(){try{return JSON.parse(localStorage.getItem('proph_timeline')||'[]')}catch(e){return[]}}function saveTL(x){localStorage.setItem('proph_timeline',JSON.stringify(x))}
+function renderTL(){const ul=document.getElementById('storyTimeline');if(!ul)return;ul.innerHTML='';loadTL().forEach(t=>{const li=document.createElement('li');li.textContent=`${t.when} — ${t.what}`;ul.appendChild(li)})}
+document.getElementById('tlAdd').onclick=()=>{const when=document.getElementById('tlWhen').value.trim()||new Date().toISOString().slice(0,10);const what=document.getElementById('tlWhat').value.trim()||'Milestone';const rows=loadTL();rows.push({when,what});saveTL(rows);renderTL();document.getElementById('tlWhat').value=''};renderTL();
+</script>
 </body>
 </html>
-
