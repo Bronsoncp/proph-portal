@@ -1,8 +1,18 @@
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
-const googleTrends = require('google-trends-api');
-const { getStore } = require('@netlify/blobs');
-const UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36";
-async function fetchGoogleTrends(){try{const res=await googleTrends.dailyTrends({trendDate:new Date(),geo:"GB"});const json=JSON.parse(res);const items=(json?.default?.trendingSearchesDays?.[0]?.trendingSearches||[]).slice(0,10).map(t=>({platform:"GoogleTrends",title:t.title?.query||"",hint:t.entities?.[0]?.name||""}));return items}catch(e){return[]}};
-async function fetchTikTokTrends(){try{const res=await fetch("https://www.tiktok.com/music",{headers:{"User-Agent":UA,"Accept-Language":"en-GB,en;q=0.9"}});const html=await res.text();const m=html.match(/<script id="SIGI_STATE" type="application\/json">(.*?)<\/script>/);if(!m)return[];const state=JSON.parse(m[1]);const musics=state?.MusicModule?.musicList||[];const items=Object.values(musics).slice(0,10).map(m=>({platform:"TikTok",title:m?.title||m?.authorName||"Trending sound",hint:m?.authorName?`by ${m.authorName}`:""}));return items}catch(e){return[]}};
-async function fetchRapidApiTikTok(){const key=process.env.RAPIDAPI_TIKTOK_KEY;if(!key)return[];try{const res=await fetch("https://tiktok-scraper7.p.rapidapi.com/trending-music?region=GB",{headers:{"X-RapidAPI-Key":key,"X-RapidAPI-Host":"tiktok-scraper7.p.rapidapi.com"}});const json=await res.json();const items=(json?.data||[]).slice(0,10).map(x=>({platform:"TikTok",title:x.title||x.music_title||"Trending sound",hint:x.author||""}));return items}catch(e){return[]}};
-exports.handler=async function(){const store=getStore({name:"proph-trends"});const key="daily.json";try{const cached=await store.get(key,{type:"json"});if(cached&&cached.date===new Date().toISOString().slice(0,10)){return{statusCode:200,headers:{"content-type":"application/json","cache-control":"public, max-age=300"},body:JSON.stringify(cached)}}}catch(e){}const [gt,tt1,tt2]=await Promise.all([fetchGoogleTrends(),fetchTikTokTrends(),fetchRapidApiTikTok()]);const seen=new Set();const merged=[...tt2,...tt1,...gt].filter(x=>{const k=`${x.platform}-${x.title}`.toLowerCase();if(seen.has(k))return false;seen.add(k);return x.title});const payload={date:new Date().toISOString().slice(0,10),items:merged};try{await store.set(key,JSON.stringify(payload),{addRandomSuffix:false,metadata:{updated:Date.now()}})}catch(e){}return{statusCode:200,headers:{"content-type":"application/json","cache-control":"public, max-age=300"},body:JSON.stringify(payload)}};
+// Safe Trend Radar — zero external deps, never crashes
+exports.handler = async function() {
+  const today = new Date().toISOString().slice(0, 10);
+  const items = [
+    { platform: "TikTok",        title: "#gymtok hook edit",         hint: "10–13s, chorus up front" },
+    { platform: "TikTok",        title: "POV dating skit → chorus",  hint: "relatable + lyric overlay" },
+    { platform: "IG Reels",      title: "Streetwear fit + beat drop",hint: "caption asks a Q" },
+    { platform: "IG Reels",      title: "Open-verse challenge",      hint: "leave 8 bars, pin best" },
+    { platform: "YouTube Shorts",title: "BTS studio + one-liner",     hint: "hook within 2s" },
+    { platform: "GoogleTrends",  title: "UK trending searches",       hint: "tie-in copy, avoid newsy" }
+  ];
+
+  return {
+    statusCode: 200,
+    headers: { "content-type": "application/json", "cache-control": "public, max-age=300" },
+    body: JSON.stringify({ date: today, items })
+  };
+};
